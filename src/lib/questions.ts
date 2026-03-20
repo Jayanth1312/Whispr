@@ -206,7 +206,7 @@ export function resultsBlock(q: Question, answers: string[]): string {
 
   return `
     <article style="border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; margin-bottom: 2rem; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding-bottom: 1.25rem; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-bottom: 1.25rem; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border);">
         <div style="flex: 1;">
           <h3 style="margin:0; font-size: 1.125rem; font-weight: 600; font-family: var(--font-sans); color: var(--foreground); line-height: 1.4;">${esc(q.text)}</h3>
         </div>
