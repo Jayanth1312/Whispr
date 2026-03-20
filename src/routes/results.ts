@@ -28,10 +28,10 @@ resultsRoute.get("/results/:id", async (c) => {
 
   const shareSection = expired ? "" : `
     <article style="margin-bottom:1.5rem;">
-      <strong style="font-size:0.85rem;">Share with your team</strong>
+      <strong style="font-size:0.85rem; color:var(--foreground);">Share with your team</strong>
       <div style="display:flex; gap:0.5rem; align-items:center; margin-top:0.4rem;">
-        <input type="text" value="${shareUrl}" readonly id="share-copy" onclick="this.select()" style="background:var(--bg2); font-size:0.85rem;"/>
-        <button type="button" onclick="copyField('share-copy', this)" style="flex-shrink:0; white-space:nowrap;">Copy</button>
+        <input type="text" value="${shareUrl}" readonly id="share-copy" onclick="this.select()" style="background:var(--bg2); font-size:0.875rem; padding: 0.75rem 1rem; flex:1; border-radius:10px;"/>
+        <button type="button" class="primary-btn" onclick="copyField('share-copy', this)" style="flex-shrink:0; white-space:nowrap; padding: 0.75rem 1.5rem; border-radius:10px; font-size:0.875rem;">Copy</button>
       </div>
     </article>`;
 
