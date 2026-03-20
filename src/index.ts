@@ -21,7 +21,7 @@ app.get("/fonts/:filename", async (c) => {
   if (!/^[\w.-]+\.(woff2?|ttf|otf|eot)$/i.test(filename)) {
     return c.text("Not found", 404);
   }
-  const fontPath = join(__dirname, "fonts", filename);
+  const fontPath = join(process.cwd(), "src", "fonts", filename);
   if (!existsSync(fontPath)) return c.text("Not found", 404);
   const ext = filename.split(".").pop()?.toLowerCase();
   const mime =

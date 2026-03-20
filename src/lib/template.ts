@@ -8,7 +8,7 @@ const __dirname = dirname(__filename);
 const cache = new Map<string, string>();
 
 export async function loadTemplate(name: string): Promise<string> {
-  const path = join(__dirname, "../templates", `${name}.html`);
+  const path = join(process.cwd(), "src", "templates", `${name}.html`);
   if (process.env.NODE_ENV === "production" && cache.has(path)) {
     return cache.get(path)!;
   }
