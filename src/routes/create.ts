@@ -19,10 +19,13 @@ async function questionBlock(idx: number): Promise<string> {
   });
 }
 
-createRoute.get("/create", async (c) => {
+const getCreateHandler = async (c: any) => {
   const initial = (await Promise.all([0, 1].map(questionBlock))).join("");
   return c.html(await page("Create session", "create", { INITIAL_QUESTIONS: initial }));
-});
+};
+
+createRoute.get("/create", getCreateHandler);
+createRoute.get("/create/", getCreateHandler);
 
 // HTMX: append a new question block
 createRoute.get("/create/add-question", async (c) => {
@@ -31,7 +34,7 @@ createRoute.get("/create/add-question", async (c) => {
   return c.html(await questionBlock(idx));
 });
 
-createRoute.post("/create", async (c) => {
+const postCreateHandler = async (c: any) => {
   try {
     const body = await c.req.parseBody();
     const topic = String(body["topic"] ?? "").trim();
@@ -89,4 +92,7 @@ createRoute.post("/create", async (c) => {
     console.error("Crash creating session:", err);
     return c.html(`<div id="form-area"><p style="color:var(--danger)">Server Error: ${err.message || err}</p><a href="/create" role="button">Go back</a></div>`, 500);
   }
-});
+};
+
+createRoute.post("/create", postCreateHandler);
+createRoute.post("/create/", postCreateHandler);
