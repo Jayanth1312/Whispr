@@ -2,10 +2,5 @@
   "installCommand": "bun install",
   "framework": null,
   "outputDirectory": "public",
-  "functions": {
-    "api/index.ts": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }]
 }
