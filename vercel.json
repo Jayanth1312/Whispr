@@ -1,6 +1,6 @@
 {
-  "buildCommand": "bun install",
   "installCommand": "bun install",
   "framework": null,
+  "outputDirectory": "public",
   "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }]
 }
