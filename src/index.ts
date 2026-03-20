@@ -49,7 +49,15 @@ app.notFound((c) =>
   </body></html>`, 404)
 );
 
-await initDb();
+// Safely run DB initialization without blocking cold starts
+if (!process.env.TURSO_DATABASE_URL) {
+  console.error("❌ Missing TURSO_DATABASE_URL environment variable!");
+} else {
+  initDb()
+    .then(() => console.log("🟢 Database initialized"))
+    .catch((e) => console.error("❌ Database init failed:", e));
+}
+
 startCleanupJob();
 
 console.log("🟢 Whispr running → http://localhost:3000");
