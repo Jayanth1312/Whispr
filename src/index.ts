@@ -1,11 +1,16 @@
 import { Hono } from "hono";
-import { join } from "path";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+import { readFileSync, existsSync } from "fs";
 import { initDb } from "./lib/db";
 import { startCleanupJob } from "./lib/cleanup";
 import { homeRoute } from "./routes/home";
 import { createRoute } from "./routes/create";
 import { respondRoute } from "./routes/respond";
 import { resultsRoute } from "./routes/results";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = new Hono();
 
@@ -16,16 +21,16 @@ app.get("/fonts/:filename", async (c) => {
   if (!/^[\w.-]+\.(woff2?|ttf|otf|eot)$/i.test(filename)) {
     return c.text("Not found", 404);
   }
-  const fontPath = join(import.meta.dir, "fonts", filename);
-  const file = Bun.file(fontPath);
-  if (!(await file.exists())) return c.text("Not found", 404);
+  const fontPath = join(__dirname, "fonts", filename);
+  if (!existsSync(fontPath)) return c.text("Not found", 404);
   const ext = filename.split(".").pop()?.toLowerCase();
   const mime =
     ext === "woff2" ? "font/woff2" :
     ext === "woff"  ? "font/woff"  :
     ext === "ttf"   ? "font/ttf"   :
     "application/octet-stream";
-  return new Response(file, {
+  const data = readFileSync(fontPath);
+  return new Response(data, {
     headers: {
       "Content-Type": mime,
       "Cache-Control": "public, max-age=31536000, immutable",

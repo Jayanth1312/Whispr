@@ -1,8 +1,7 @@
-import { randomBytes } from "crypto";
-
 export function generateId(len = 10): string {
   const chars = "abcdefghijkmnpqrstuvwxyz23456789";
-  const bytes = randomBytes(len);
+  const bytes = new Uint8Array(len);
+  globalThis.crypto.getRandomValues(bytes);
   return Array.from(bytes)
     .map((b) => chars[b % chars.length])
     .join("");

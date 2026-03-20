@@ -1,13 +1,18 @@
-import { join } from "path";
+import { readFileSync } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const cache = new Map<string, string>();
 
 export async function loadTemplate(name: string): Promise<string> {
-  const path = join(import.meta.dir, "../templates", `${name}.html`);
+  const path = join(__dirname, "../templates", `${name}.html`);
   if (process.env.NODE_ENV === "production" && cache.has(path)) {
     return cache.get(path)!;
   }
-  const html = await Bun.file(path).text();
+  const html = readFileSync(path, "utf-8");
   if (process.env.NODE_ENV === "production") cache.set(path, html);
   return html;
 }
