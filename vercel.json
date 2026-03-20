@@ -2,5 +2,10 @@
   "installCommand": "bun install",
   "framework": null,
   "outputDirectory": "public",
+  "functions": {
+    "api/index.ts": {
+      "includeFiles": "src/**"
+    }
+  },
   "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }]
 }
