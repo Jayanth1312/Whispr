@@ -1,0 +1,45 @@
+<div class="q-block" data-idx="{{IDX}}" style="border:1px solid var(--border); border-radius:12px; padding:1.25rem; margin-bottom:1rem; background:var(--card); transition:border-color 0.15s;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+    <strong style="font-size:0.875rem; color:var(--muted-foreground);">Question {{NUM}}</strong>
+    {{REMOVE_BTN}}
+  </div>
+
+  <label for="q_text_{{IDX}}" style="font-size:0.875rem; font-weight:500; margin-bottom:0.35rem; display:block;">Question text</label>
+  <input
+    id="q_text_{{IDX}}"
+    name="q_text_{{IDX}}"
+    type="text"
+    placeholder="e.g. How would you rate team communication?"
+    maxlength="200"
+    required
+    autocomplete="off"
+    style="width:100%; padding:0.75rem 1rem; border:1px solid var(--border); border-radius:10px; background:transparent; font-size:0.95rem; color:var(--foreground);"
+  />
+
+  <label for="q_type_{{IDX}}" style="font-size:0.875rem; font-weight:500; margin-top:1rem; margin-bottom:0.35rem; display:block;">Response type</label>
+  <select
+    id="q_type_{{IDX}}"
+    name="q_type_{{IDX}}"
+    onchange="toggleTypeOptions(this, {{IDX}})"
+    style="width:100%; padding:0.75rem 1rem; border:1px solid var(--border); border-radius:10px; background:transparent; font-size:0.95rem; color:var(--foreground); cursor:pointer;"
+  >
+    <option value="text">Open-ended (free text)</option>
+    <option value="rating">Rating scale (1-5)</option>
+    <option value="yesno">Yes / No</option>
+    <option value="choice">Multiple choice</option>
+    <option value="mood">Mood / sentiment</option>
+    <option value="rank">Ranked priority</option>
+  </select>
+
+  <div id="q_opts_wrap_{{IDX}}" style="display:none; margin-top:1rem;">
+    <label for="q_opts_{{IDX}}" style="font-size:0.875rem; font-weight:500; margin-bottom:0.35rem; display:block;">Options <small style="color:var(--muted-foreground);">(one per line, 2-6 options)</small></label>
+    <textarea
+      id="q_opts_{{IDX}}"
+      name="q_opts_{{IDX}}"
+      rows="4"
+      placeholder="Option A&#10;Option B&#10;Option C"
+      maxlength="600"
+      style="resize:vertical; width:100%; padding:0.75rem 1rem; border:1px solid var(--border); border-radius:10px; background:transparent; font-size:0.95rem; color:var(--foreground);"
+    ></textarea>
+  </div>
+</div>

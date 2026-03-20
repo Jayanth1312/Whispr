@@ -1,0 +1,383 @@
+<html lang="en" class="dark" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">whispr - Anonymous team feedback</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web" vid="6"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" vid="7">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" vid="8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" vid="9">
+
+    <script vid="10">
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#16a34a',
+                            DEFAULT: '#4ade80',
+                            dark: '#22c55e',
+                        },
+                        bg: {
+                            light: '#ffffff',
+                            dark: '#0a0a0a',
+                        },
+                        surface: {
+                            light: '#ffffff',
+                            dark: '#121212',
+                        },
+                        border: {
+                            light: '#e5e7eb',
+                            dark: '#27272a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style vid="11">
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #52525b;
+        }
+
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+        .dark select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a1a1aa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        }
+    </style>
+</head>
+<body class="bg-bg-light dark:bg-bg-dark text-neutral-900 dark:text-neutral-100 font-sans antialiased min-h-screen flex flex-col transition-colors duration-200" vid="12">
+
+
+    <header class="border-b border-border-light dark:border-border-dark sticky top-0 bg-bg-light/80 dark:bg-bg-dark/80 backdrop-blur-md z-50" vid="13">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" vid="14">
+            <a href="#" id="logo-link" class="text-xl font-bold tracking-tight text-brand-light dark:text-brand hover:opacity-80 transition-opacity" vid="15">
+                whispr
+            </a>
+
+            <div class="flex items-center gap-3" vid="16">
+                <button id="theme-toggle" class="p-2 rounded-lg border border-border-light dark:border-border-dark hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors text-neutral-600 dark:text-neutral-400" vid="17">
+                    <i class="ph ph-sun hidden dark:block text-lg" vid="18"></i>
+                    <i class="ph ph-moon block dark:hidden text-lg" vid="19"></i>
+                </button>
+
+                <a href="https://github.com" target="_blank" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border-light dark:border-border-dark hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors text-sm font-medium" vid="20">
+                    <i class="ph ph-github-logo text-lg" vid="21"></i>
+                    Star
+                </a>
+
+                <button id="nav-new-session-btn" class="flex items-center gap-2 px-4 py-1.5 rounded-lg border border-border-light dark:border-border-dark hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors text-sm font-medium" vid="22">
+                    <i class="ph ph-plus" vid="23"></i>
+                    New session
+                </button>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="flex-grow" vid="24">
+
+
+        <main id="view-home" class="max-w-6xl mx-auto px-6 py-20 flex flex-col items-center" vid="25">
+
+            <div class="text-center max-w-3xl mx-auto mb-16" vid="26">
+                <p class="font-serif text-sm md:text-base tracking-widest text-neutral-500 dark:text-neutral-400 mb-6 lowercase" vid="27">
+                    anonymous · ephemeral · honest
+                </p>
+
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-tight" vid="28">
+                    Honest feedback,<br vid="29">
+                    <span class="font-serif italic font-semibold text-brand-light dark:text-brand" vid="30">without the awkward.</span>
+                </h1>
+
+                <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-300 mb-10 max-w-2xl mx-auto leading-relaxed" vid="31">
+                    Create an anonymous feedback session in 30 seconds. Share a link. Everything disappears when the timer runs out.
+                </p>
+
+                <button id="hero-create-btn" class="bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 text-white dark:text-neutral-900 px-8 py-4 rounded-xl font-medium text-lg transition-all shadow-sm hover:shadow-md transform hover:-translate-y-0.5" vid="32">
+                    Create a session
+                </button>
+            </div>
+
+            <div class="w-full max-w-4xl border-t border-border-light dark:border-border-dark pt-16" vid="33">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6" vid="34">
+
+                    <div class="p-6 rounded-2xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-[#0a0a0a] hover:border-brand-light/50 dark:hover:border-brand/50 transition-colors" vid="35">
+                        <div class="w-10 h-10 rounded-full bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center mb-4 text-neutral-700 dark:text-neutral-300" vid="36">
+                            <i class="ph ph-link text-xl" vid="37"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2" vid="38">Just a link</h3>
+                        <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed" vid="39">
+                            No accounts required for you or your team. Generate a unique link and share it anywhere.
+                        </p>
+                    </div>
+
+
+                    <div class="p-6 rounded-2xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-[#0a0a0a] hover:border-brand-light/50 dark:hover:border-brand/50 transition-colors" vid="40">
+                        <div class="w-10 h-10 rounded-full bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center mb-4 text-neutral-700 dark:text-neutral-300" vid="41">
+                            <i class="ph ph-mask-happy text-xl" vid="42"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2" vid="43">Truly anonymous</h3>
+                        <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed" vid="44">
+                            We don't track IP addresses, browser fingerprints, or anything else. Feedback is genuinely unlinked.
+                        </p>
+                    </div>
+
+
+                    <div class="p-6 rounded-2xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-[#0a0a0a] hover:border-brand-light/50 dark:hover:border-brand/50 transition-colors" vid="45">
+                        <div class="w-10 h-10 rounded-full bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center mb-4 text-neutral-700 dark:text-neutral-300" vid="46">
+                            <i class="ph ph-hourglass-high text-xl" vid="47"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2" vid="48">Auto-expires</h3>
+                        <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed" vid="49">
+                            Set a timer. When it's up, the submission link breaks and the session is locked.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+
+        <main id="view-new-session" class="max-w-3xl mx-auto px-6 py-12 hidden" vid="50">
+
+            <div class="mb-10" vid="51">
+                <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-4" vid="52">New feedback session</h1>
+                <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed" vid="53">
+                    Set your topic, pick an expiry, then build your questions. You'll get two links — one to share, one for results.
+                </p>
+            </div>
+
+            <form id="new-session-form" class="space-y-8" onsubmit="event.preventDefault();" vid="54">
+
+
+                <fieldset class="border border-border-light dark:border-border-dark rounded-xl p-6 pt-4 relative" vid="55">
+                    <legend class="px-3 text-sm font-medium text-neutral-800 dark:text-neutral-200 ml-2 bg-bg-light dark:bg-bg-dark" vid="56">Session details</legend>
+
+                    <div class="space-y-6 mt-2" vid="57">
+                        <div vid="58">
+                            <label for="topic" class="block text-sm font-medium mb-2 text-neutral-700 dark:text-neutral-300" vid="59">Topic</label>
+                            <input type="text" id="topic" placeholder="e.g. Sprint retro, Team health check, Manager feedback" class="w-full bg-transparent border border-border-light dark:border-border-dark rounded-lg px-4 py-3 focus:outline-none focus:border-brand-light dark:focus:border-brand focus:ring-1 focus:ring-brand-light dark:focus:ring-brand transition-all text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600" vid="60">
+                            <p class="text-sm mt-2 text-neutral-500 dark:text-neutral-400" vid="61">Your team will see this as the session title.</p>
+                        </div>
+
+                        <div vid="62">
+                            <label for="expiry" class="block text-sm font-medium mb-2 text-neutral-700 dark:text-neutral-300" vid="63">Expires in</label>
+                            <select id="expiry" class="w-full bg-transparent border border-border-light dark:border-border-dark rounded-lg px-4 py-3 focus:outline-none focus:border-brand-light dark:focus:border-brand focus:ring-1 focus:ring-brand-light dark:focus:ring-brand transition-all text-neutral-900 dark:text-white cursor-pointer" vid="64">
+                                <option value="1h" class="bg-white dark:bg-neutral-900" vid="65">1 hour</option>
+                                <option value="24h" selected="" class="bg-white dark:bg-neutral-900" vid="66">24 hours</option>
+                                <option value="3d" class="bg-white dark:bg-neutral-900" vid="67">3 days</option>
+                                <option value="1w" class="bg-white dark:bg-neutral-900" vid="68">1 week</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+                <fieldset class="border border-border-light dark:border-border-dark rounded-xl p-6 pt-4 relative" vid="69">
+                    <legend class="px-3 text-sm font-medium text-neutral-800 dark:text-neutral-200 ml-2 bg-bg-light dark:bg-bg-dark" vid="70">Questions (up to 6)</legend>
+
+                    <p class="text-sm serif text-neutral-500 dark:text-neutral-400 mb-6 mt-2" vid="71">
+                        Mix and match response types — ratings, open text, polls, and more.
+                    </p>
+
+                    <div id="questions-container" class="space-y-4" vid="72">
+
+                    </div>
+
+                    <button type="button" id="add-question-btn" class="w-full mt-6 py-3 rounded-xl border border-border-light dark:border-border-dark bg-neutral-50 dark:bg-neutral-900/50 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2 text-sm font-medium text-neutral-700 dark:text-neutral-300" vid="73">
+                        <i class="ph ph-plus text-lg" vid="74"></i>
+                        Add question
+                    </button>
+                </fieldset>
+
+
+                <div class="pt-4 pb-20" vid="75">
+                    <button type="submit" class="w-full bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 text-white dark:text-neutral-900 py-4 rounded-xl font-medium text-lg transition-all shadow-sm flex items-center justify-center gap-2" vid="76">
+                        Create session
+                    </button>
+                </div>
+
+            </form>
+        </main>
+
+    </div>
+
+
+    <script vid="77">
+        document.addEventListener('DOMContentLoaded', () => {
+
+
+            const htmlElement = document.documentElement;
+            const themeToggleBtn = document.getElementById('theme-toggle');
+
+
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) || !('theme' in localStorage)) {
+                htmlElement.classList.add('dark');
+            } else {
+                htmlElement.classList.remove('dark');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                htmlElement.classList.toggle('dark');
+                if (htmlElement.classList.contains('dark')) {
+                    localStorage.theme = 'dark';
+                } else {
+                    localStorage.theme = 'light';
+                }
+            });
+
+
+            const viewHome = document.getElementById('view-home');
+            const viewNewSession = document.getElementById('view-new-session');
+            const logoLink = document.getElementById('logo-link');
+            const navNewSessionBtn = document.getElementById('nav-new-session-btn');
+            const heroCreateBtn = document.getElementById('hero-create-btn');
+
+            function showView(viewName) {
+                window.scrollTo(0, 0);
+                if (viewName === 'home') {
+                    viewHome.classList.remove('hidden');
+                    viewNewSession.classList.add('hidden');
+                    navNewSessionBtn.classList.remove('hidden');
+                } else if (viewName === 'new-session') {
+                    viewHome.classList.add('hidden');
+                    viewNewSession.classList.remove('hidden');
+
+
+                }
+            }
+
+            logoLink.addEventListener('click', (e) => { e.preventDefault(); showView('home'); });
+            navNewSessionBtn.addEventListener('click', () => showView('new-session'));
+            heroCreateBtn.addEventListener('click', () => showView('new-session'));
+
+
+
+            const questionsContainer = document.getElementById('questions-container');
+            const addQuestionBtn = document.getElementById('add-question-btn');
+            const MAX_QUESTIONS = 6;
+
+            let questions = [
+                { id: generateId(), text: '', type: 'open' },
+                { id: generateId(), text: '', type: 'open' }
+            ];
+
+            function generateId() {
+                return Math.random().toString(36).substr(2, 9);
+            }
+
+            function renderQuestions() {
+                questionsContainer.innerHTML = '';
+
+                questions.forEach((q, index) => {
+                    const questionHTML = `
+                        <div class="border border-border-light dark:border-border-dark rounded-xl p-5 bg-white dark:bg-[#0a0a0a] transition-all relative group" id="question-card-${q.id}">
+                            <div class="flex justify-between items-center mb-5">
+                                <h4 class="font-semibold text-sm text-neutral-900 dark:text-white">Question ${index + 1}</h4>
+                                ${questions.length > 1 ? `
+                                <button type="button" onclick="removeQuestion('${q.id}')" class="px-3 py-1.5 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 text-xs font-medium rounded-lg hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/30 dark:hover:text-red-400 transition-colors">
+                                    Remove
+                                </button>
+                                ` : ''}
+                            </div>
+
+                            <div class="space-y-5">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-neutral-700 dark:text-neutral-300">Question text</label>
+                                    <input type="text" placeholder="e.g. How would you rate team communication?" value="${q.text}"
+                                        oninput="updateQuestionText('${q.id}', this.value)"
+                                        class="w-full bg-transparent border border-border-light dark:border-border-dark rounded-lg px-4 py-2.5 focus:outline-none focus:border-brand-light dark:focus:border-brand focus:ring-1 focus:ring-brand-light dark:focus:ring-brand transition-all text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-neutral-700 dark:text-neutral-300">Response type</label>
+                                    <select onchange="updateQuestionType('${q.id}', this.value)"
+                                        class="w-full bg-transparent border border-border-light dark:border-border-dark rounded-lg px-4 py-2.5 focus:outline-none focus:border-brand-light dark:focus:border-brand focus:ring-1 focus:ring-brand-light dark:focus:ring-brand transition-all text-neutral-900 dark:text-white cursor-pointer">
+                                        <option value="open" ${q.type === 'open' ? 'selected' : ''} class="bg-white dark:bg-neutral-900">Open-ended (free text)</option>
+                                        <option value="rating" ${q.type === 'rating' ? 'selected' : ''} class="bg-white dark:bg-neutral-900">Rating scale (1-5)</option>
+                                        <option value="multiple" ${q.type === 'multiple' ? 'selected' : ''} class="bg-white dark:bg-neutral-900">Multiple choice</option>
+                                        <option value="yesno" ${q.type === 'yesno' ? 'selected' : ''} class="bg-white dark:bg-neutral-900">Yes / No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    questionsContainer.insertAdjacentHTML('beforeend', questionHTML);
+                });
+
+
+                if (questions.length >= MAX_QUESTIONS) {
+                    addQuestionBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    addQuestionBtn.disabled = true;
+                } else {
+                    addQuestionBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    addQuestionBtn.disabled = false;
+                }
+            }
+
+
+            window.removeQuestion = function(id) {
+                questions = questions.filter(q => q.id !== id);
+                renderQuestions();
+            }
+
+            window.updateQuestionText = function(id, text) {
+                const q = questions.find(q => q.id === id);
+                if (q) q.text = text;
+            }
+
+            window.updateQuestionType = function(id, type) {
+                const q = questions.find(q => q.id === id);
+                if (q) q.type = type;
+            }
+
+            addQuestionBtn.addEventListener('click', () => {
+                if (questions.length < MAX_QUESTIONS) {
+                    questions.push({ id: generateId(), text: '', type: 'open' });
+                    renderQuestions();
+
+
+                    setTimeout(() => {
+                        const newCard = document.getElementById(`question-card-${questions[questions.length-1].id}`);
+                        if(newCard) {
+                            newCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                    }, 50);
+                }
+            });
+
+
+            renderQuestions();
+
+
+            showView('home');
+        });
+    </script>
+
+</body></html>

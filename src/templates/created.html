@@ -1,0 +1,52 @@
+<div style="text-align:center; padding:1rem 0 2rem;">
+  <div style="font-size:2.5rem; margin-bottom:0.75rem;">🎉</div>
+  <h1>Session created!</h1>
+  <p class="page-sub">Share the first link with your team. Keep the second link — it's your private results page.</p>
+</div>
+
+<article>
+  <h4>Share with your team</h4>
+  <div style="display:flex; gap:0.5rem; align-items:center;">
+    <input type="text" value="{{SHARE_URL}}" readonly id="share-url" onclick="this.select()" style="background:var(--bg2); flex:1; border-radius:10px; padding:0.8rem 0.85rem; border:1px solid var(--border); box-sizing:border-box;"/>
+    <button type="button" class="copy-btn" onclick="copyField('share-url', this)" style="flex-shrink:0; white-space:nowrap; background:#18181b; color:#fff; border:none; border-radius:10px; padding:0.8rem 1.25rem; font-weight:500; cursor:pointer; box-sizing:border-box;">Copy</button>
+  </div>
+</article>
+
+<article style="margin-top:1rem;">
+  <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+    <h4 style="margin:0;">Your private results link</h4>
+    <mark style="background:#fef08a; padding:0.15rem 0.4rem; border-radius:4px; font-size:0.75rem; font-weight:600;">Keep this secret</mark>
+  </div>
+  <div style="display:flex; gap:0.5rem; align-items:center;">
+    <input type="text" value="{{RESULTS_URL}}" readonly id="results-url" onclick="this.select()" style="background:var(--bg2); flex:1; border-radius:10px; padding:0.8rem 0.85rem; border:1px solid var(--border); box-sizing:border-box;"/>
+    <button type="button" class="copy-btn" onclick="copyField('results-url', this)" style="flex-shrink:0; white-space:nowrap; background:#18181b; color:#fff; border:none; border-radius:10px; padding:0.8rem 1.25rem; font-weight:500; cursor:pointer; box-sizing:border-box;">Copy</button>
+    <button type="button" onclick="saveLink('{{RESULTS_URL}}', '{{TOPIC}}', this)" style="flex-shrink:0; background:var(--brand); color:#fff; border:none; border-radius:10px; padding:0.8rem 1rem; font-weight:500; cursor:pointer; font-size:0.875rem; box-sizing:border-box;">Save</button>
+  </div>
+  <small>Anyone with this link can see all responses. We don't send emails — save it now.</small>
+</article>
+
+
+<script>
+  function copyField(id, btn) {
+    navigator.clipboard.writeText(document.getElementById(id).value).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = orig, 1800);
+    });
+  }
+
+  function saveLink(url, topic, btn) {
+    const list = JSON.parse(localStorage.getItem('whispr_saved') || '[]');
+    if (list.some(l => l.url === url)) {
+      btn.textContent = 'Saved!';
+      return;
+    }
+    list.push({ url: url, topic: topic || 'Session', savedAt: new Date().toISOString() });
+
+    localStorage.setItem('whispr_saved', JSON.stringify(list));
+    btn.textContent = 'Saved!';
+    btn.style.background = 'rgba(22, 163, 74, 0.1)';
+    btn.style.color = 'var(--brand)';
+    btn.style.border = '1px solid rgba(22, 163, 74, 0.2)';
+  }
+</script>

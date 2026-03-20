@@ -1,0 +1,68 @@
+<div style="margin-bottom:2rem;">
+  <span class="expire-tag"><mark>Anonymous</mark> &nbsp;·&nbsp; {{TIME_LEFT}}</span>
+  <h1 style="margin-top:0.6rem; font-family:var(--font-serif);">{{TOPIC}}</h1>
+  <p class="page-sub">Your response is completely anonymous. No name, no IP address, nothing identifying is stored.</p>
+</div>
+
+<form hx-post="/respond/{{SESSION_ID}}" hx-target="#respond-area" hx-swap="outerHTML" hx-indicator="#submit-spin">
+  <div id="respond-area">
+    {{QUESTION_FIELDS}}
+
+    <hr/>
+    <button type="submit" style="width:100%;">
+      Submit anonymously
+      <span id="submit-spin" class="htmx-indicator"> ⏳</span>
+    </button>
+    <p style="text-align:center; font-size:0.8rem; color:var(--fg2); margin-top:0.6rem;">
+      Once submitted you cannot edit or delete your response.
+    </p>
+  </div>
+</form>
+
+<script>
+function toggleTypeOptions(el, idx) {
+  const wrap = document.getElementById('q_opts_wrap_' + idx);
+  if (wrap) wrap.style.display = ['choice','rank'].includes(el.value) ? '' : 'none';
+}
+
+// Drag-to-rank for rank questions
+(function() {
+  document.querySelectorAll('.rank-list').forEach(list => {
+    let dragging = null;
+    list.addEventListener('dragstart', e => {
+      dragging = e.target.closest('.rank-item');
+      setTimeout(() => dragging && dragging.classList.add('dragging'), 0);
+    });
+    list.addEventListener('dragend', () => {
+      dragging && dragging.classList.remove('dragging');
+      dragging = null;
+      updateRankValues(list);
+    });
+    list.addEventListener('dragover', e => {
+      e.preventDefault();
+      const after = getDragAfter(list, e.clientY);
+      if (after == null) list.appendChild(dragging);
+      else list.insertBefore(dragging, after);
+    });
+  });
+
+  function getDragAfter(list, y) {
+    const items = [...list.querySelectorAll('.rank-item:not(.dragging)')];
+    return items.reduce((closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) return { offset, element: child };
+      return closest;
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+  }
+
+  function updateRankValues(list) {
+    list.querySelectorAll('.rank-item').forEach((item, i) => {
+      const num = item.querySelector('.rank-num');
+      if (num) num.textContent = i + 1;
+      const input = item.querySelector('input[type=hidden]');
+      if (input) input.value = item.dataset.value + ':' + (i + 1);
+    });
+  }
+})();
+</script>

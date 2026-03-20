@@ -1,0 +1,21 @@
+<div style="margin-bottom:1.75rem;">
+  {{STATUS_TAG}}
+  <h1 style="margin-top:0.5rem; margin-bottom:0.3rem;">{{TOPIC}}</h1>
+  <p style="color:var(--fg2); font-size:0.9rem; margin-bottom:0;">{{RESPONSE_COUNT}} &nbsp;·&nbsp; {{SESSION_STATUS}}</p>
+</div>
+
+{{SHARE_SECTION}}
+
+{{CONTENT}}
+
+{{REFRESH_SCRIPT}}
+
+<script>
+  function copyField(id, btn) {
+    navigator.clipboard.writeText(document.getElementById(id).value).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = orig, 1800);
+    });
+  }
+</script>

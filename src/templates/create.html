@@ -1,0 +1,103 @@
+<div id="form-area" style="padding-bottom: 3rem;">
+  <h1>New feedback session</h1>
+  <p class="page-sub">
+    Set your topic, pick an expiry, then build your questions.
+    You'll get two links — one to share, one for results.
+  </p>
+
+  <form hx-post="/create" hx-target="#form-area" hx-swap="outerHTML" hx-indicator="#submit-spin">
+    <fieldset>
+      <legend class="serif">Session details</legend>
+
+      <label for="topic">Topic</label>
+      <input
+        id="topic" name="topic" type="text"
+        placeholder="e.g. Sprint retro, Team health check, Manager feedback"
+        required maxlength="120" autocomplete="off"
+      />
+      <small>Your team will see this as the session title.</small>
+
+      <br/><br/>
+
+      <label for="expiry">Expires in</label>
+      <select id="expiry" name="expiry">
+        <option value="6">6 hours</option>
+        <option value="24" selected>24 hours</option>
+        <option value="72">72 hours</option>
+      </select>
+    </fieldset>
+
+    <fieldset style="margin-top:1.25rem;">
+      <legend class="serif">
+        Questions
+        <small style="font-weight:400; color:var(--fg2);">(up to 6)</small>
+      </legend>
+
+      <p class="" style="font-size:0.85rem; color:var(--fg2); margin:-0.25rem 0 1rem;">
+        Mix and match response types — ratings, open text, polls, and more.
+      </p>
+
+      <div id="questions-list">
+        {{INITIAL_QUESTIONS}}
+      </div>
+
+      <button
+        type="button"
+        class="dashed-add-btn"
+        hx-get="/create/add-question"
+        hx-target="#questions-list"
+        hx-swap="beforeend"
+        hx-vals="js:{idx: document.querySelectorAll('.q-block').length}"
+        id="add-q-btn"
+        style="margin-top:0.5rem;"
+      >
+        <div class="plus-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </div>
+        Add question
+      </button>
+    </fieldset>
+
+    <button type="submit" class="primary-btn" style="width:100%; margin-top:1.5rem; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+      Create session
+      <span id="submit-spin" class="htmx-indicator" style="display:inline-flex; align-items:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="spin">
+          <line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+        </svg>
+    </button>
+  </form>
+</div>
+
+<script>
+document.addEventListener('htmx:afterSwap', () => {
+  const count = document.querySelectorAll('.q-block').length;
+  const btn = document.getElementById('add-q-btn');
+  if (btn) btn.style.display = count >= 6 ? 'none' : '';
+});
+
+function toggleTypeOptions(el, idx) {
+  const wrap = document.getElementById('q_opts_wrap_' + idx);
+  if (wrap) wrap.style.display = ['choice','rank'].includes(el.value) ? '' : 'none';
+}
+
+function reindexQuestions() {
+  document.querySelectorAll('.q-block').forEach((block, i) => {
+    const label = block.querySelector('strong');
+    if (label) label.textContent = 'Question ' + (i + 1);
+
+    const txt = block.querySelector('input[name^="q_text_"]'); if (txt) txt.name = 'q_text_' + i;
+    const typ = block.querySelector('select[name^="q_type_"]'); if (typ) {
+      typ.name = 'q_type_' + i;
+      typ.setAttribute('onclick', `toggleTypeOptions(this, ${i})`);
+      typ.setAttribute('onchange', `toggleTypeOptions(this, ${i})`);
+    }
+    const opt = block.querySelector('textarea[name^="q_opts_"]'); if (opt) opt.name = 'q_opts_' + i;
+    const wrp = block.querySelector('[id^="q_opts_wrap_"]'); if (wrp) wrp.id = 'q_opts_wrap_' + i;
+  });
+  const btn = document.getElementById('add-q-btn');
+  if (btn) btn.style.display = document.querySelectorAll('.q-block').length >= 6 ? 'none' : '';
+}
+</script>
